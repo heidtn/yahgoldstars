@@ -1,4 +1,6 @@
 import itertools
+import copy
+
 f = open('input.txt', 'r')
 cities = []
 paths = dict()
@@ -10,10 +12,17 @@ for line in f:
 	if city2 not in cities: cities.append(city2)	
 
 best = []
-bestDistance = MAX_INT
+bestDistance = 99999999999
 distance = 0
 print cities
 for permute in itertools.permutations(cities):
-	
+	distance = 0
 	for i in range(len(permute) - 1):
-		if	
+		if (permute[i], permute[i + 1]) in paths:
+			pair = paths[(permute[i], permute[i + 1])]
+		else:
+			pair = paths[(permute[i + 1], permute[i])]
+		distance += pair
+	if distance < bestDistance:
+		bestDistance = distance
+		print permute, distance
